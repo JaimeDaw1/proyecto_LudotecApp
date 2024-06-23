@@ -1,0 +1,7 @@
+    <!-- Canvas para el gráfico con datos inyectados -->
+    <div class="d-flex justify-content-center mb-5">
+        <canvas id="victoriasDerrotasChart"
+            data-victorias="{{ juegos_ganados|length }}"
+            data-derrotas="{{ juegos_perdidos|length }}">
+        </canvas>
+    </div>

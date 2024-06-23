@@ -1,0 +1,117 @@
+{% extends 'ludotec_app/home.html' %}
+
+{% block section %}
+{% include 'ludotec_app/mensajes.html' %}
+
+<div class="container mt-5">
+    <div class="card bg-info">
+        <div class="card-header">
+            <h2 class="text-center">{{ juego.nombre }}</h2>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th scope="row">Nombre</th>
+                        <td>{{ juego.nombre }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Mínimo de Jugadores</th>
+                        <td>{{ juego.min_jugadores }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Máximo de Jugadores</th>
+                        <td>{{ juego.max_jugadores }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Duración</th>
+                        <td>{{ juego.duracion }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Dificultad</th>
+                        <td>{{ juego.dificultad }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Año</th>
+                        <td>{{ juego.año }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Precio</th>
+                        <td>{{ juego.precio }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Mecánicas</th>
+                        <td>
+                            {% for mecanica in juego.mecanicas.all %}
+                                {{ mecanica.nombre_mecanica }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Temáticas</th>
+                        <td>
+                            {% for tematica in juego.tematicas.all %}
+                                {{ tematica.nombre_tematica }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+      <!-- Recuadro de descripción -->
+    <div class="mt-4 px-4 py-3 border border-secondary rounded recuadro">
+        <!-- Aquí puedes agregar el contenido de la descripción -->
+        <h4 class="text-center mb-4">Descripción de {{ juego.nombre }}</h4>
+        <p class="descripcion">{{ juego.descripcion }} </p>
+    </div>
+
+    <!-- Imagen del juego -->
+    <div class="mt-4 text-center">
+        {% if juego.imagen %}
+            <img src="{{ juego.imagen.url }}" class="img-fluid" alt="{{ juego.nombre }}">
+        {% else %}
+            <p class="text-center">No hay imagen disponible para este juego.</p>
+        {% endif %}
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'boardgame_statistic' juego.id %}" class="btn btn-primary">Ver estadísticas de este juego</a>
+    </div>
+
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-12 text-center">
+            <button type="button" onclick="window.history.back()" class="btn btn-secondary btn-sm">Volver</button>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+            Borrar juego
+        </button>
+    </div>
+</div>
+
+<!-- Modal de confirmación -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar borrado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Desea borrar este juego?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form id="deleteForm" action="{% url 'borrar_juego' juego.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Borrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

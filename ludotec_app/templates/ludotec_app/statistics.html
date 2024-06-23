@@ -1,0 +1,268 @@
+{% extends 'ludotec_app/home.html' %}
+{% load static %}
+
+{% block section %}
+{% include 'ludotec_app/mensajes.html' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h3 class="text-center mt-3 mb-4">Consulta estadísticas de juegos y jugadores</h3>
+
+            <form method="post" class="text-center">
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="statistics_form">
+                
+                <!-- Lista desplegable de jugadores -->
+                <select name="jugador" class="form-control mb-3 select-player mx-auto">
+                    <option value="">Seleccione un jugador</option>
+                    {% for jugador in jugadores %}
+                        <option value="{{ jugador.nombre }}" {% if jugador.nombre == nombre_jugador %}selected{% endif %}>{{ jugador.nombre }}</option>
+                    {% endfor %}
+                </select>
+                
+                <!-- Lista desplegable de juegos -->
+                <select name="juego" class="form-control mb-3 select-game mx-auto">
+                    <option value="">Seleccione un juego</option>
+                    {% for juego in juegos %}
+                        <option value="{{ juego.juego_nombre }}" {% if juego.juego_nombre == nombre_juego %}selected{% endif %}>{{ juego.juego_nombre }}</option>
+                    {% endfor %}
+                </select>
+
+                <!-- Botón para mostrar estadísticas -->
+                <button type="submit" class="btn btn-primary d-block mx-auto">Mostrar estadísticas</button>
+                <div class="row justify-content-center mt-3 mb-5">
+                    <div class="col-md-12 text-center">
+                        <button type="button" onclick="window.history.back()" class="btn btn-secondary btn-sm">Volver</button>
+                    </div>
+                </div>
+            </form>
+
+            <div id="estadisticas-jugador" class="text-center">
+                {% if nombre_jugador and not nombre_juego %}
+                    <p>Estadísticas de <strong>{{ nombre_jugador }}</strong> para todos los juegos:</p>
+
+                    {% include 'ludotec_app/pie_chart.html' %}
+
+                    {% if juegos_ganados %}
+                        <h2 class="bg-success text-white">Victorias</h2>
+                        <!-- Tabla de partidas ganadas -->
+                        <table class="table table-striped table-bordered table-victorias">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Nombre del juego <span class="arrow arrow-0">&#8597;</span></th>
+                                    <th>Puntuación <span class="arrow arrow-1">&#8597;</span></th>
+                                    <th>Fecha <span class="arrow arrow-2">&#8597;</span></th>
+                                    <th>Lugar <span class="arrow arrow-3">&#8597;</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for partida in juegos_ganados %}
+                                    <tr>
+                                        <td>{{ partida.nombre_juego }}</td>
+                                        <td>
+                                            {% for puntuacion in puntuaciones_ganadas %}
+                                                {% if puntuacion.partida == partida %}
+                                                    {{ puntuacion.puntuacion }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <td>{{ partida.fecha|date:"d/m/Y" }}</td>
+                                        <td>{{ partida.lugar }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+
+                    {% if juegos_perdidos %}
+                        <h2 class="bg-danger text-white">Derrotas</h2>
+                        <!-- Tabla de partidas perdidas -->
+                        <table class="table table-striped table-bordered table-derrotas">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Nombre del juego <span class="arrow arrow-0">&#8597;</span></th>
+                                    <th>Puntuación <span class="arrow arrow-1">&#8597;</span></th>
+                                    <th>Fecha <span class="arrow arrow-2">&#8597;</span></th>
+                                    <th>Lugar <span class="arrow arrow-3">&#8597;</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for partida in juegos_perdidos %}
+                                    <tr>
+                                        <td>{{ partida.nombre_juego }}</td>
+                                        <td>
+                                            {% for puntuacion in puntuaciones_perdidas %}
+                                                {% if puntuacion.partida == partida %}
+                                                    {{ puntuacion.puntuacion }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <td>{{ partida.fecha|date:"d/m/Y" }}</td>
+                                        <td>{{ partida.lugar }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+
+                {% elif not nombre_jugador and nombre_juego %}
+                    <p class="text-center">Partidas jugadas a {{nombre_juego}} : {{ partidas_info|length }}</p>
+
+                    <!-- Tabla de todas las partidas jugadas a ese juego -->
+                    {% include 'ludotec_app/gameplay_table.html' %}
+
+                {% elif victorias is not None and derrotas is not None %}
+                    <p>Estadísticas de <strong>{{ nombre_jugador }}</strong> para el juego <strong>{{ nombre_juego }}</strong>:</p>
+
+                    {% include 'ludotec_app/pie_chart.html' %}
+
+                    {% if juegos_ganados %}
+                        <h2 class="bg-success text-white">Victorias</h2>
+                        <!-- Tabla de partidas ganadas -->
+                        <table class="table table-striped table-bordered table-victorias">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Nombre del juego <span class="arrow arrow-0">&#8597;</span></th>
+                                    <th>Puntuación <span class="arrow arrow-1">&#8597;</span></th>
+                                    <th>Fecha <span class="arrow arrow-2">&#8597;</span></th>
+                                    <th>Lugar <span class="arrow arrow-3">&#8597;</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for partida in juegos_ganados %}
+                                    <tr>
+                                        <td>{{ partida.nombre_juego }}</td>
+                                        <td>
+                                            {% for puntuacion in puntuaciones_ganadas %}
+                                                {% if puntuacion.partida == partida %}
+                                                    {{ puntuacion.puntuacion }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <td>{{ partida.fecha|date:"d/m/Y" }}</td>
+                                        <td>{{ partida.lugar }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+
+                    {% if juegos_perdidos %}
+                        <h2 class="bg-danger text-white">Derrotas</h2>
+                        <!-- Tabla de partidas perdidas -->
+                        <table class="table table-striped table-bordered table-derrotas">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Nombre del juego <span class="arrow arrow-0">&#8597;</span></th>
+                                    <th>Puntuación <span class="arrow arrow-1">&#8597;</span></th>
+                                    <th>Fecha <span class="arrow arrow-2">&#8597;</span></th>
+                                    <th>Lugar <span class="arrow arrow-3">&#8597;</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for partida in juegos_perdidos %}
+                                    <tr>
+                                        <td>{{ partida.nombre_juego }}</td>
+                                        <td>
+                                            {% for puntuacion in puntuaciones_perdidas %}
+                                                {% if puntuacion.partida == partida %}
+                                                    {{ puntuacion.puntuacion }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <td>{{ partida.fecha|date:"d/m/Y" }}</td>
+                                        <td>{{ partida.lugar }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                {% else %}
+                    <p>Seleccione un jugador y/o un juego para ver las estadísticas.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'ludotec_app/js/statistic.js' %}"></script>
+
+<!-- Script de Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Verificar si el elemento del gráfico existe
+        var chartElement = document.getElementById('victoriasDerrotasChart');
+        if (chartElement) {
+            // Obtener el nombre del jugador seleccionado
+            var nombreJugador = "{{ nombre_jugador }}";
+            var nombreJuego = "{{ nombre_juego }}"; // Obtener el nombre del juego seleccionado
+
+            // Obtener los datos de victorias y derrotas desde los atributos data
+            var victorias = parseInt(chartElement.getAttribute('data-victorias'), 10);
+            var derrotas = parseInt(chartElement.getAttribute('data-derrotas'), 10);
+
+            // Calcular el total de partidas
+            var totalPartidas = victorias + derrotas;
+
+            var ctx = chartElement.getContext('2d');
+            chartElement.width = 400; // Establecer el ancho del canvas
+            chartElement.height = 400; // Establecer el alto del canvas
+
+            var chart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Victorias', 'Derrotas'],
+                    datasets: [{
+                        label: 'Estadísticas de ' + nombreJugador + (nombreJuego ? ' en ' + nombreJuego : ''), // Concatenar el nombre del jugador y el juego si está presente
+                        data: [victorias, derrotas],
+                        backgroundColor: ['#28a745', '#dc3545']
+                    }]
+                },
+                options: {
+                    responsive: false, // Desactivar la respuesta al tamaño de la ventana
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                generateLabels: function(chart) {
+                                    var data = chart.data;
+                                    if (data.labels.length && data.datasets.length) {
+                                        // Mapeamos las etiquetas originales y añadimos una nueva etiqueta para el total de partidas
+                                        var labels = data.labels.map(function(label, i) {
+                                            var dataset = data.datasets[0];
+                                            var value = dataset.data[i];
+                                            return {
+                                                text: label + ' (' + value + ')',
+                                                fillStyle: dataset.backgroundColor[i],
+                                                hidden: isNaN(dataset.data[i]) || dataset.data[i] <= 0,
+                                                index: i
+                                            };
+                                        });
+
+                                        // Añadimos la nueva etiqueta al final
+                                        labels.push({
+                                            text: 'Total de partidas (' + totalPartidas + ')',
+                                            fillStyle: '#007bff', // Color transparente o un color de tu elección
+                                            hidden: false,
+                                            index: data.labels.length
+                                        });
+
+                                        return labels;
+                                    }
+                                    return [];
+                                }
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Victorias y Derrotas de ' + nombreJugador + (nombreJuego ? ' en ' + nombreJuego : '') // Concatenar el nombre del jugador y el juego si está presente
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>
+
+{% endblock %}

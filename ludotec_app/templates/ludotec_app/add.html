@@ -1,0 +1,56 @@
+{% extends 'ludotec_app/home.html' %}
+
+{% load static %}
+
+{% block section %}
+{% include 'ludotec_app/mensajes.html' %}
+<section class="py-3">
+    <h3 class="mb-4">Agrega un nuevo juego a tu ludoteca</h3>
+    <div class="container px-4 px-lg-5 my-5 form1">
+        <form method="post" action="{% url 'add' %}" enctype="multipart/form-data" class="form-style" id="juegoForm">
+            {% csrf_token %}
+            
+            <!-- FIELDSET PARA TODOS LOS CAMPOS -->
+            <fieldset class="border border-secondary rounded">
+                {% for field in form.visible_fields %}
+                    <div class="mb-3">
+                        {% if field.name == 'mecanicas' or field.name == 'tematicas' %}
+                            <details>
+                                <summary>{{ "Seleccionar "|add:field.label }}{% if not field.field.required %} <span class="text-muted">(Opcional)</span>{% endif %}</summary>
+                                <div class="columnas-checkboxes" data-field="{{ field.name }}">
+                                    {% for checkbox in field %}
+                                        <div class="form-check">
+                                            {{ checkbox }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                {% if field.name == 'mecanicas' %}
+                                    <input type="text" id="id_nueva_mecanica" class="form-control ancho mb-2 mt-2" placeholder="Agrega una nueva mecánica">
+                                    <button type="button" id="agregar_mecanica" class="btn btn-secondary">Agregar Mecánica</button>
+                                {% elif field.name == 'tematicas' %}
+                                    <input type="text" id="id_nueva_tematica" class="form-control ancho mb-2 mt-2" placeholder="Agrega una nueva temática">
+                                    <button type="button" id="agregar_tematica" class="btn btn-secondary">Agregar Temática</button>
+                                {% endif %}
+                            </details>
+                        {% else %}
+                            <label for="{{ field.id_for_label }}">{{ field.label }}{% if not field.field.required %} <span class="text-muted">(Opcional)</span>{% endif %}</label>
+                            {{ field }}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </fieldset>
+
+            <button type="submit" class="btn btn-primary d-block mx-auto" value="Agregar nuevo juego">Agregar juego</button>
+            <div class="row justify-content-center mt-3">
+                <div class="col-md-12 text-center">
+                    <button type="button" onclick="window.history.back()" class="btn btn-secondary btn-sm">Volver</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="{% static 'ludotec_app/js/add.js' %}"></script>
+
+{% endblock %}

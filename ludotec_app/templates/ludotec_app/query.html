@@ -1,0 +1,124 @@
+{% extends 'ludotec_app/home.html' %}
+
+{% load static %}
+
+{% block section %}
+{% include 'ludotec_app/mensajes.html' %}
+<div class="d-flex justify-content-center mt-5">
+    <h3 class="mb-4 mt-3">Consulta tus juegos</h3>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div>
+            <form method="post" class="form-style">
+                {% csrf_token %}
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="{{ form.nombre.id_for_label }}">Nombre del juego</label><br>
+                        {{ form.nombre }}<br><br>
+                        <label for="{{ form.numero_jugadores.id_for_label }}">Número de Jugadores</label><br>
+                        {{ form.numero_jugadores }}<br><br>
+                        <label for="{{ form.dificultad.id_for_label }}">Dificultad</label><br>
+                        {{ form.dificultad }}<br>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="{{ form.precio.id_for_label }}">Precio</label><br>
+                        {{ form.precio }}<br><br>
+                        <label for="{{ form.año.id_for_label }}">Año</label><br>
+                        {{ form.año }}<br><br>
+                        <label for="{{ form.duracion.id_for_label }}">Duración</label><br>
+                        {{ form.duracion }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <details>
+                            <summary>Mecánicas</summary>
+                            <div class="columnas-checkboxes form-check" data-field="mecanicas">
+                                {% for mecanica in form.mecanicas %}
+                                    <div class="form-check">
+                                        {{ mecanica }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </details>
+                    </div>
+                    <div class="col-md-6">
+                        <details>
+                            <summary>Temáticas</summary>
+                            <div class="columnas-checkboxes form-check" data-field="tematicas">
+                                {% for tematica in form.tematicas %}
+                                    <div class="form-check">
+                                        {{ tematica }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-primary mt-3">Búsqueda personalizada</button>
+                    <button type="reset" class="btn btn-primary mt-3">Limpiar filtros</button>
+                </div>
+                <div class="row justify-content-center mt-3">
+                    <div class="col-md-12 text-center">
+                        <button type="button" onclick="window.history.back()" class="btn btn-secondary btn-sm">Volver</button>
+                    </div>
+                </div>         
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+
+{% if juegos %}
+<div class="container-table mt-5 table-responsive">
+    <h4>Mi ludoteca</h4>
+    <table class="table table-hover table-striped custom-table table-bordered">
+        <thead class="bg-warning">
+            <tr>
+                <th onclick="ordenarTabla(0)"> <i class="bi bi-card-text" style="font-size: 1rem"></i> Nombre <span>&#8597;</span></th>
+                <th onclick="ordenarTabla(1)"> <i class="bi bi-dice-1" style="font-size: 1rem"></i> Min. jugadores <span>&#8597;</span></th>
+                <th onclick="ordenarTabla(2)"> <i class="bi bi-dice-6" style="font-size: 1rem"></i> Max. jugadores <span>&#8597;</span></th>
+                <th onclick="ordenarTabla(3)"> <i class="bi bi-clock" style="font-size: 1rem"></i> Duración <span>&#8597;</span></th>
+                <th onclick="ordenarTabla(4)"> <i class="bi bi-emoji-astonished" style="font-size: 1rem"></i> Dificultad <span>&#8597;</span></th>
+                <th onclick="ordenarTabla(5)"> <i class="bi bi-calendar" style="font-size: 1rem"></i> Año <span>&#8597;</span></th>
+                <th onclick="ordenarTabla(6)"> <i class="bi bi-currency-euro" style="font-size: 1rem"></i> Precio <span>&#8597;</span></th>
+                <th onclick="ordenarTabla(7)"> <i class="bi bi-gear-fill" style="font-size: 1rem"></i> Mecánicas <span>&#8597;</span></th>
+                <th onclick="ordenarTabla(8)"> <i class="bi bi-tags" style="font-size: 1rem"></i> Temáticas <span>&#8597;</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for juego in juegos %}
+            <tr>
+                <td><a href="{% url 'detalle_juego' juego.id %}">{{ juego.nombre }}</a></td>
+                <td>{{ juego.min_jugadores }}</td>
+                <td>{{ juego.max_jugadores }}</td>
+                <td>{{ juego.duracion }}</td>
+                <td>{{ juego.dificultad }}</td>
+                <td>{{ juego.año }}</td>
+                <td>{{ juego.precio }}</td>
+                <td>
+                    {% for mecanica in juego.mecanicas.all %}
+                    {{ mecanica.nombre_mecanica }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for tematica in juego.tematicas.all %}
+                    {{ tematica.nombre_tematica }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<script src="{% static 'ludotec_app/js/query.js' %}"></script>
+
+{% endblock %}

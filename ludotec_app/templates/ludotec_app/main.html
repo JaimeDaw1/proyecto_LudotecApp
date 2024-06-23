@@ -1,0 +1,152 @@
+{% load static %}
+{% include 'ludotec_app/mensajes.html' %}
+
+<!--CAROUSEL-->
+
+<div class="carousel-container rounded-carousel">
+  <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel" data-interval="5000">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'ludotec_app/carousel-images/azul.webp' %}" class="d-block w-100 img-fluid" alt="Azul">
+        <div class="carousel-caption d-none d-md-block">
+          <h4>Azul (2017)</h4>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'ludotec_app/carousel-images/Catan.jpg' %}" class="d-block w-100 img-fluid" alt="Catán">
+        <div class="carousel-caption d-none d-md-block">
+          <h4>Catán (1995)</h4>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'ludotec_app/carousel-images/Aventureros.jpg' %}" class="d-block w-100 img-fluid" alt="Aventureros al tren">
+        <div class="carousel-caption d-none d-md-block">
+          <h4>Aventureros al tren (2005)</h4>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'ludotec_app/carousel-images/Everdell.jpg' %}" class="d-block w-100 img-fluid" alt="Everdell">
+        <div class="carousel-caption d-none d-md-block">
+          <h4>Everdell (2018)</h4>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'ludotec_app/carousel-images/sagrada.jpg' %}" class="d-block w-100 img-fluid" alt="Sagrada">
+        <div class="carousel-caption d-none d-md-block">
+          <h4>Sagrada (2017)</h4>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'ludotec_app/carousel-images/Arnak.jpg' %}" class="d-block w-100 img-fluid" alt="Las ruinas perdidas de Arnak">
+        <div class="carousel-caption d-none d-md-block">
+          <h4>Las ruinas perdidas de Arnak (2020)</h4>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'ludotec_app/carousel-images/Tzolkin.jpg' %}" class="d-block w-100 img-fluid" alt="Tzolkin">
+        <div class="carousel-caption d-none d-md-block">
+          <h4>Tzolkin (2012)</h4>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'ludotec_app/carousel-images/Wingspan.jpg' %}" class="d-block w-100 img-fluid" alt="Wingspan">
+        <div class="carousel-caption d-none d-md-block">
+          <h4>Wingspan (2019)</h4>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'ludotec_app/carousel-images/Viticulture.jpg' %}" class="d-block w-100 img-fluid" alt="Viticulture">
+        <div class="carousel-caption d-none d-md-block">
+          <h4>Viticulture (2015)</h4>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'ludotec_app/carousel-images/Terraforming.jpg' %}" class="d-block w-100 img-fluid" alt="Terraforming">
+        <div class="carousel-caption d-none d-md-block">
+          <h4>Terraforming Mars (2016)</h4>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'ludotec_app/carousel-images/arknova.jpg' %}" class="d-block w-100 img-fluid" alt="Ark Nova">
+        <div class="carousel-caption d-none d-md-block">
+          <h4>Ark Nova (2021)</h4>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'ludotec_app/carousel-images/Borgoña.jpg' %}" class="d-block w-100 img-fluid" alt="Borgoña">
+        <div class="carousel-caption d-none d-md-block">
+          <h4>Los castillos de Borgoña (2011)</h4>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'ludotec_app/carousel-images/Concordia.webp' %}" class="d-block w-100 img-fluid" alt="Concordia">
+        <div class="carousel-caption d-none d-md-block">
+          <h4>Concordia (2013)</h4>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-target="#carouselExampleFade" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-target="#carouselExampleFade" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+
+
+
+<!--GRID CARDS-->
+
+<div class="cards row mt-5">
+  <div class=" row justify-content-center">
+    <div class="col-md-4 mx-5 mt-5">
+      <a href="{% url 'add' %}" class="card-link">
+      <div class="card">
+        <img src="{% static 'ludotec_app/icons/add2.jpg' %}" class="card-img-top img-fluid" alt="Imagen 1">
+      </a>
+        <div class="card-body bg-warning text-dark text-center">
+          <h3 class="card-title">Agregar juego</h3>
+          <p class="card-text mb-4">Añade un nuevo juego de mesa a tu colección</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mx-5 mt-5">
+      <a href="{% url 'query' %}" class="card-link">
+      <div class="card">
+        <img src="{% static 'ludotec_app/icons/query.jpg' %}" class="card-img-top img-fluid" alt="Imagen 2">
+      </a>
+        <div class="card-body bg-warning text-dark text-center">
+          <h3 class="card-title">Consultar ludoteca</h3>
+          <p class="card-text">Búsqueda personalizada de juegos en función de tus preferencias</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class=" row justify-content-center">
+    <div class="col-md-4 mx-5 mt-5">
+      <a href="{% url 'register' %}" class="card-link">
+      <div class="card">
+        <img src="{% static 'ludotec_app/icons/register3.webp' %}" class="card-img-top img-fluid" alt="Imagen 3">
+      </a>
+        <div class="card-body bg-warning text-dark text-center">
+          <h3 class="card-title">Registrar partida</h3>
+          <p class="card-text">Guarda la puntuación de los jugadores y el resultado de la partida</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mx-5 mt-5">
+      <a href="{% url 'statistics' %}" class="card-link">
+      <div class="card">
+        <img src="{% static 'ludotec_app/icons/statistics2.jpg' %}" class="card-img-top img-fluid" alt="Imagen 4">
+      </a>
+        <div class="card-body bg-warning text-dark text-center">
+          <h3 class="card-title">Ver estadísticas</h3>
+          <p class="card-text">Consulta estadísticas de victorias/derrotas de tus partidas registradas</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,411 @@
+body {
+  margin: 0; /* Asegúrate de que no haya márgenes */
+  overflow-x: hidden; /* Evita la barra de desplazamiento horizontal */
+  background-color: #c3dde6; /* Fondo sólido como respaldo */
+}
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(to bottom, #c3dde6 50%, #3eb8e9 100%);
+  opacity: 0; /* Inicialmente transparente */
+  transition: opacity 0.5s ease; /* Transición suave de opacidad */
+}
+body::after {
+  opacity: 1; /* Mostrar gradiente una vez que el contenido está completamente cargado */
+}
+
+/*STYLE NAVIGATION */
+.nav-link {
+  white-space: nowrap;
+}
+
+.navbar-brand img {
+  max-height: 50px; /* ajusta el tamaño máximo de altura según sea necesario */
+  width: auto; /* asegura que el ancho se ajuste automáticamente */
+}
+
+
+/*Estilo para poner "separadores" entre los enlaces del navbar*/
+.nav-item {
+  position: relative;
+}
+
+.nav-item:not(:nth-last-child(2)):not(:last-child)::after,
+.nav-item:nth-child(3)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -10px;  /* Ajusta la distancia para centrar la barra */
+  transform: translateY(-50%);
+  border-left: 1px solid #000;  /* Ajusta el color y el grosor según tu necesidad */
+  height: 30px;  /* Ajusta la altura según tu necesidad */
+}
+
+/* Media query para colapsar la navbar cuando la pantalla sea menor a 1200px */
+@media (max-width: 1200px) {
+  .navbar-expand-lg .navbar-collapse {
+    display: none !important;
+  }
+  .navbar-expand-lg .navbar-toggler {
+    display: block;
+  }
+  .navbar-expand-lg .navbar-collapse.show {
+    display: block !important;
+  }
+}
+
+/* Asegúrate de que la navbar se expanda cuando la pantalla sea mayor a 1200px */
+@media (min-width: 1201px) {
+  .navbar-expand-lg .navbar-collapse {
+    display: flex !important;
+  }
+  .navbar-expand-lg .navbar-toggler {
+    display: none;
+  }
+}
+
+/*MESSAGES STYLE*/
+
+.alert-container {
+  position: fixed;
+  top: 85px;
+  left: 50%; 
+  transform: translateX(-50%); 
+  z-index: 1000; 
+  width: 300px; 
+  text-align: center;
+}
+
+.alert {
+  position: relative; 
+  margin-bottom: 10px; 
+  padding: 5px 10px; /* Ajusta el padding para reducir la altura vertical */
+  transition: opacity 0.5s ease; 
+  display: inline-block;
+}
+
+
+/*FONT STYLES*/
+h3 {
+  font-family: 'Roboto', sans-serif; /* Establecer Roboto como la fuente principal */
+  font-weight: 700; /* Peso de la fuente: bold */
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3); /* Sombra del texto para destacarlo */
+  color: #444; /* Color del texto */
+
+}
+
+.pacifico-regular {
+  font-family: "Pacifico", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.lobster-two-regular {
+  font-family: "Lobster Two", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.descripcion {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  text-align: justify;
+  font-size: 1rem; /* Tamaño base del texto */
+  line-height: 1.5rem; /* Igual al tamaño de la primera letra */
+}
+
+.recuadro{
+  background-color: #dacaca;
+}
+
+.ficha{
+  background-color: rgb(211, 211, 211);
+}
+
+
+.descripcion:first-letter {
+  font-size: 2rem; /* El doble del tamaño base */
+  font-style: italic; /* Cursiva */
+}
+
+
+/* Estilo para el carrusel */
+
+.carousel-container {
+  width: 90%;
+  margin: 0 auto;
+  position: relative;
+  border-radius: 25px; /* Aplica esquinas redondeadas */
+  overflow: hidden; /* Asegura que las imágenes no se salgan de los bordes redondeados */
+}
+
+#carouselExampleFade {
+  max-height: 45rem;
+}
+
+.carousel-inner .carousel-item img {
+  max-height: 45rem;
+  object-fit: cover;
+  border-radius: 25px; /* Aplica esquinas redondeadas a las imágenes */
+
+}
+
+.carousel-caption {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
+  color: white; /* Color del texto */
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card img {
+  height: 300px;
+  width: 100%; /* Para que la imagen ocupe todo el ancho de la tarjeta */
+  object-fit: cover; /* Mantiene la proporción de la imagen y la ajusta dentro del contenedor */
+}
+
+.card-body {
+  flex: 1; /* Permite que el cuerpo de la tarjeta ocupe el espacio restante */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra el contenido verticalmente */
+}
+
+/*Centra el primer formulario*/
+.form1{
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+}
+
+h3{
+  text-align: center;
+}
+
+/*Ancho de los input del formulario para guardar juegos*/
+.ancho{
+  width: 450px;
+}
+
+.columnas-checkboxes {
+  column-count: 2;
+  column-gap: 20px; /* Puedes ajustar este valor según tu preferencia */
+}
+
+
+.form-check {
+width: auto; /* Ajusta el ancho según sea necesario */
+margin-bottom: 0; /* Espaciado entre los checkboxes */
+}
+
+.custom-checkbox {
+  display: inline-block;
+  width: 20%;
+}
+
+/*Estilos para la tabla que lista los juegos*/
+
+.container-table {
+  margin: 0 auto; /* Centra la tabla de juegos */
+  width: 92%; /* Tamaño para que muestre en la misma línea el nombre del campo + el icono */
+}
+
+.custom-table th,
+.custom-table td {
+  vertical-align: middle;
+  min-width: 130px; /*Ancho minimo que tiene cada columna de la tabla*/
+}
+
+.custom-table th{
+  background-color: #86c1fc;
+  text-align: center;
+  height: 60px;
+  font-size: 1rem;
+}
+
+
+.custom-table td{
+  font-size: small;
+}
+
+.custom-table td:first-child {
+  font-size: medium;
+}
+
+
+/*Tabla de estadistica de un juego de la lista*/
+.boardgame-statistic th{
+  background-color: #86c1fc;
+  height: 50px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.boardgame-statistic td{
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table-victorias a,
+.table-derrotas a {
+  text-decoration: none;
+}
+
+.table-victorias th,
+.table-derrotas th{
+  background-color: #86c1fc;
+}
+
+
+.table-victorias th:hover,
+.table-derrotas th:hover {
+  background-color: #aed1f5;
+  cursor: pointer;
+}
+
+.custom-table th:hover {
+  background-color: #aed1f5;
+  cursor: pointer;
+}
+
+.boardgame-statistic th:hover {
+  background-color: #aed1f5;
+  cursor: pointer;
+}
+
+.custom-table th i.bi{
+  font-size: 1.2rem;
+  margin-right: 1px;
+}
+
+.custom-table td:not(:first-child) {
+  text-align: center;
+}
+
+
+.table-striped>tbody>tr:nth-child(odd)>td {
+background-color: #fdda71;
+}
+
+/*Fondo de color alterno en filas de la tabla */
+.table-striped>tbody>tr:nth-child(even)>td {
+background-color: #f8edcb;
+}
+
+/* Resalta el nombre de los juegos en la tabla */
+.custom-table td:first-child {
+  font-weight: 600;
+}
+
+.custom-table a{
+  text-decoration: none;
+}
+
+
+
+
+fieldset {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.form-style {
+  font-family: 'Roboto', sans-serif;
+}
+
+
+
+/***************************** GAMEPLAY STYLES**********************************/
+.detalle_partida{
+  margin-top: 30px;
+  margin-left: 30px;
+}
+
+
+/******************************REGISTER STYLE************************************/ 
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: inline-block;
+  width: 120px; /* Ajusta el ancho según sea necesario */
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+  width: 150px; /* Ajusta el ancho según sea necesario */
+  margin-right: 5px; /* Reducir la separación entre label e input */
+}
+
+.form-group button {
+  display: inline-block;
+  vertical-align: top;
+}
+
+#puntuacion-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#puntuacion-table th, #puntuacion-table td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+#puntuacion-table th {
+  background-color: #f2f2f2;
+}
+
+/**************************STATISTICS STYLE***********************/
+
+.select-player{
+  width: 300px;
+}
+
+.select-game{
+  width: 300px;
+}
+
+/**************************FEEDBACK STYLE*************************/
+.feedback-color{
+  background-color: #F8F8FF;
+
+}
+
+/**************************FOOTER STYLE***************************/
+footer {
+  background-color: #555555;
+  background-image: linear-gradient(to bottom, #555555, #333333);
+  margin-top: 200px;
+}
+
+.logo{
+  max-width: 100%;
+  height: auto;
+}
+
+.left-logo,
+.right-logo {
+  flex: 1; /* Distribuye el espacio disponible de manera uniforme entre las columnas */
+  display: flex; /* Activa el modelo de caja flexible */
+  align-items: center; /* Centra verticalmente los elementos */
+  justify-content: center;/* Centra horizontalmente los elementos */
+}
+
+
+

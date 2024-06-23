@@ -1,0 +1,56 @@
+{% load static %}
+
+<footer class="footer text-white py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 left-logo">
+                <!-- Logo a la izquierda -->
+                <img src="{% static 'ludotec_app/icons/LogoLudoteca.png' %}" alt="Logo Izquierdo" class="logo">
+            </div>
+            <div class="col-md-6 form-style">
+                <h4 class="text-center">¡Ayúdanos a mejorar la Ludotec-App!</h4>
+                <p class="text-center">Tu opinión es crucial para conseguir una plataforma aún mejor. Comparte tus ideas y sugerencias para enriquecer la experiencia de todos.</p>
+                <!--Formulario para enviar propuestas de mejora en la aplicación-->
+                <form method="post" action="" class="form-style">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="feedback_form">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ feedback_form.nombre }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ feedback_form.email }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-4">
+                        {{ feedback_form.mensaje }}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-3 text-center">
+                            <p>{{ feedback_form.valoracion.label_tag }}</p>
+                            {% for radio in feedback_form.valoracion %}
+                            <div class="form-check form-check-inline">
+                                {{ radio.tag }}
+                                <label class="form-check-label" for="{{ radio.id_for_label }}">
+                                    {{ radio.choice_label }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4 right-logo">
+                <!-- Logo a la derecha -->
+                <img src="{% static 'ludotec_app/icons/LogoLudoteca.png' %}" alt="Logo Derecho" class="logo">
+            </div>
+        </div>
+    </div>
+</footer>
